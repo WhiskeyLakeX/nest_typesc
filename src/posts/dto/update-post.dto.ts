@@ -1,5 +1,4 @@
-
-export interface Post {
+export default class UpdatePostDto {
   id: number;
   content: string;
   title: string;
