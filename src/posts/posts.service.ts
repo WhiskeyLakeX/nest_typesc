@@ -1,9 +1,15 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  UseFilters,
+} from '@nestjs/common';
 import CreatePostDto from './dto/create-post.dto';
 import UpdatePostDto from './dto/update-post.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import Post from './entity/post.entity';
+import { ExceptionsLoggerFilter } from '../utils/exceptionsLogger.filter';
 
 @Injectable()
 export default class PostsService {
@@ -16,6 +22,7 @@ export default class PostsService {
     return this.postsRepository.find();
   }
 
+  @UseFilters(ExceptionsLoggerFilter)
   async getPostById(id: number) {
     const post = await this.postsRepository.findOne({
       where: { id },
